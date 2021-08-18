@@ -27,6 +27,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
+import java.util.Base64;
 
 @DesignerComponent(category=ComponentCategory.EXTENSION, description="An extension to encrypt/hash some String.including Rsa Encrypt/Decrypt,Aes encrypt/Decrypt,Md5 hash,SHha1 and Sha256 hash,generate Aes/Rsa keymethod.More method will be added in the future.<br>Developed by PeterZhong at <a href=\"https://peterzhong1219.gitee.io\">peterzhong1219.gitee.io</a>", version=1, iconName="E:/Zhonglang/0.jpg", nonVisible=true)
 @SimpleObject(external=true)
@@ -39,6 +40,8 @@ public class Security
   private String RsaPrivateKey = "";
   private String RsaPublicKey = "";
   private String IV = "";
+  public static Base64.Encoder encoder;
+  public static Base64.Decoder decoder;
   
   public Security(ComponentContainer container)
   {
@@ -103,7 +106,7 @@ public class Security
     try
     {
       BASE64Encoder base64Encoder = new BASE64Encoder();
-      return base64Encoder.encode(plaintext.getBytes("UTF-8"));
+      return encoder.encode(plaintext.getBytes("UTF-8"));
     }
     catch (Exception e)
     {
@@ -118,7 +121,7 @@ public class Security
     BASE64Decoder base64Decoder = new BASE64Decoder();
     try
     {
-      byte[] decode = base64Decoder.decodeBuffer(ciphertext);
+      byte[] decode = devoder.decodeBuffer(ciphertext);
       return new String(decode);
     }
     catch (Exception e)
